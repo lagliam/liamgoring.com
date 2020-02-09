@@ -1,0 +1,12 @@
+---
+layout: default
+modal-id: 5
+date: 2020-02-09
+img: ideagenerator.png
+alt: A sylized lightbulb on a white background
+project-date: February 2020
+title: WIP - Idea Generator
+category: Android
+description: Work in progress. Android app that will generate business or app ideas.
+
+---

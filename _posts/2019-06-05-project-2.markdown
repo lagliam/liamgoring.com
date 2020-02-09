@@ -1,0 +1,12 @@
+---
+layout: default
+modal-id: 2
+date: 2014-07-17
+img: proposal.png
+alt: laptop in the background of text saying "5 Tips for Effective Proposal Writing for Internal Software Developers"
+project-date: June 2019
+title: 5 Tips for Effective Proposal Writing for Internal Software Developers
+category: Article
+description: Tips and tricks for writing software proposals for your company. <a href="https://medium.com/@lagliam/5-tips-for-effective-proposal-writing-for-internal-software-developers-4360cf036703">Medium Article</a>
+
+---
