@@ -1,0 +1,60 @@
+# Site settings
+title: Liam Goring
+email: contact@liamgoring.com
+url: liamgoring.com
+baseurl: /liamgoring.com
+description: ""
+keywords: "software developer, winnipeg, web developer, technical writer"
+skills: "Software Developer - Philosopher - Technical Writer"
+meta_author: Goring Liam
+
+# Google webmaster tools
+google_verify:
+
+# https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
+bing_verify:
+
+# Contact form:
+# - static : pass through formspree.io to validate email sending
+# - disqus : replace contact form by disqus thread
+# - comment the line below if you want to stick with the default PHP contact form
+contact: static
+
+# If you use disqus you need disqus shortname
+# https://help.disqus.com/customer/portal/articles/466208
+disqus_shortname: myshortname
+
+# Color settings (hex-codes without the leading hash-tag)
+color:
+  primary: 336b87 #80B3FF
+  primary-rgb: "24,288,156" #"128,179,255"
+  secondary: 2a3132 #FD6E8A
+  secondary-dark: A2122F
+
+# Footer settings
+footer:
+  copyright: Liam Goring
+  location: Location
+  social: Around the Web
+  credits: Website Credits
+
+# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
+social:
+  - title: twitter
+    url: http://twitter.com/Liam_lag
+  - title: stack-overflow
+    url: https://stackexchange.com/users/5872887/lagliam
+  - title: github
+    url: http://github.com/lagliam
+
+# Postal address (add as many lines as necessary)
+address:
+  - line: Winnipeg, MB
+  - line: Canada
+
+# Credits content
+credits: 'This site was built using Jekyll and <a href="https://github.com/jeromelachaud/freelancer-theme">freelancer-free</a> and Bootstrap theme created by <a href="http://startbootstrap.com">Start Bootstrap</a>.'
+
+# Build settings
+markdown: kramdown
+permalink: pretty

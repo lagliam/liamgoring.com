@@ -1,0 +1,12 @@
+---
+layout: default
+modal-id: 1
+date: 2019-06-05
+img: ethics.png
+alt: A man in front of a whiteboard with diagrams drawn on it background to with text "The Ethical Computer Professional" in the foreground
+project-date: June 2019
+title: The Ethical Computer Professional
+category: Article
+description: An anlysis into the growing need for computer professionals to consider the ethical impact their work has. <a href="https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b">Medium Article </a>
+
+---
