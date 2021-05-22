@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/liamgoring.com/static/css/main.bab0b925.chunk.css",
+    "main.js": "/liamgoring.com/static/js/main.4e833562.chunk.js",
+    "main.js.map": "/liamgoring.com/static/js/main.4e833562.chunk.js.map",
+    "runtime-main.js": "/liamgoring.com/static/js/runtime-main.2e293df0.js",
+    "runtime-main.js.map": "/liamgoring.com/static/js/runtime-main.2e293df0.js.map",
+    "static/js/2.ebc1bee4.chunk.js": "/liamgoring.com/static/js/2.ebc1bee4.chunk.js",
+    "static/js/2.ebc1bee4.chunk.js.map": "/liamgoring.com/static/js/2.ebc1bee4.chunk.js.map",
+    "index.html": "/liamgoring.com/index.html",
+    "static/css/main.bab0b925.chunk.css.map": "/liamgoring.com/static/css/main.bab0b925.chunk.css.map",
+    "static/js/2.ebc1bee4.chunk.js.LICENSE.txt": "/liamgoring.com/static/js/2.ebc1bee4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2e293df0.js",
+    "static/js/2.ebc1bee4.chunk.js",
+    "static/css/main.bab0b925.chunk.css",
+    "static/js/main.4e833562.chunk.js"
+  ]
+}
