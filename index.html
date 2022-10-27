@@ -13,6 +13,14 @@
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118815476-2"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-118815476-2');
+		</script>
   </head>
   <body class="is-preload">
     <!-- Header -->
@@ -58,8 +66,8 @@
             /></a>
             <h3>Idea Generator</h3>
             <p>
-              Built using Express and React and hosted on Heroku using the
-              container service. This app takes two lists and generates a random
+              Built using Express and React and containerized using Docker. 
+							This app takes two lists and generates a random
               business idea for the user.
             </p>
           </article>
