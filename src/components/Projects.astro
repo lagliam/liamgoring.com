@@ -1,0 +1,69 @@
+---
+import '../styles/projects.css';
+
+interface Project {
+  title: string;
+  description: string;
+  tags?: string[];
+  link?: string;
+  image?: string;
+}
+
+const projects: Project[] = [
+  {
+    title: "Personal Portfolio Website",
+    description: "Built with Astro and TypeScript, this portfolio website showcases my projects, skills, and experience.",
+    tags: ["Astro", "TypeScript", "CSS"],
+    link: "https://github.com/lagliam/liamgoring.com",
+    image: "/favicon.svg"
+  },
+  {
+    title: "DIP-Bot",
+    description: "A Discord bot built with Python and MySQL that provides image posting utilities.",
+    tags: ["Python", "MySQL", "Discord API"],
+    link: "https://github.com/lagliam/dip-bot",
+    image: "/Discord-Logo+Wordmark-Color.png"
+  },
+  {
+    title: "Article: The Ethical Computer Professional",
+    description: "Covers the ethics of computer professionals such as programmers. Featured in the artificial intelligence magazine Becoming Human.",
+    tags: ["Writing", "Ethics", "AI"],
+    link: "https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b",
+    image: "/ethicalcomputerprofessional.jpeg"
+  },
+  {
+    title: "Joke Bot",
+    description: "This bot will tell a knock knock joke or learn one from the user, saving to its database. Containerized to run in Docker.",
+    tags: ["Nest.js", "Docker", "React", "TypeScript", "PostgreSQL"],
+    link: "https://github.com/lagliam/jokebot",
+    image: "/jokebot.svg"
+  },
+];
+---
+
+<section id="projects" class="projects-section">
+  <div class="container">
+    <h2>Featured Projects</h2>
+    <p class="section-subtitle">Here are some of my recent projects that showcase my skills and experience.</p>
+    
+    <div class="projects-grid">
+      {projects.map((project) => (
+        <div class="project-card">
+          <div class="project-image">
+            <img src={project.image} alt={project.title} />
+          </div>
+          <div class="project-content">
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <div class="project-tags">
+              {project.tags?.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            <a href={project.link} class="project-link">View Project →</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

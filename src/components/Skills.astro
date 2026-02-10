@@ -1,0 +1,47 @@
+---
+import '../styles/skills.css';
+
+interface Skill {
+  category: string;
+  technologies: string[];
+}
+
+const skills: Skill[] = [
+  {
+    category: "Frontend",
+    technologies: ["Vue.js", "AngularJS", "Astro", "TypeScript"]
+  },
+  {
+    category: "Backend",
+    technologies: ["Node.js", "Python", "MySQL", "Laravel", "PHP"]
+  },
+  {
+    category: "Tools & Platforms",
+    technologies: ["Git", "Docker", "AWS", "GitHub Actions", "VS Code"]
+  },
+  {
+    category: "Other",
+    technologies: ["REST APIs", "Web Performance", "SEO", "Testing", "DevOps", "Agile"]
+  }
+];
+---
+
+<section id="skills" class="skills-section">
+  <div class="container">
+    <h2>Skills & Technologies</h2>
+    <p class="section-subtitle">A summary of the technologies and tools I work with.</p>
+    
+    <div class="skills-grid">
+      {skills.map((skillGroup) => (
+        <div class="skill-category">
+          <h3>{skillGroup.category}</h3>
+          <div class="skills-list">
+            {skillGroup.technologies.map((tech) => (
+              <span class="skill-badge">{tech}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
