@@ -4,9 +4,14 @@ import '../styles/navbar.css';
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = "Liam Goring — Full Stack Developer and Philosopher. Building modern web applications with a focus on thoughtful design, AI-assisted workflows, and engineering ethics."
+} = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, "https://liamgoring.com");
 const currentYear = new Date().getFullYear();
 ---
 
@@ -14,32 +19,111 @@ const currentYear = new Date().getFullYear();
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary SEO -->
+    <title>{title === "Liam Goring" ? title : `${title} | Liam Goring`}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Liam Goring" />
+    <meta name="keywords" content="full stack developer, web developer, Astro, Vue, TypeScript, Python, AI, philosophy, portfolio" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://liamgoring.com/1767764040823.webp" />
+    <meta property="og:image:width" content="800" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content="Liam Goring" />
+
+    <!-- Twitter / X card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://liamgoring.com/1767764040823.webp" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Fonts: preconnect + preload latin woff2 to eliminate FOIT -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Professional portfolio website" />
-    <title>{title}</title>
-    <script>
-      // Initialize dark mode as default, or from localStorage
-      const theme = localStorage.getItem('theme') || 'dark';
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark-mode');
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="https://fonts.gstatic.com/s/roboto/v51/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBGEe.woff2"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Hero image preload — largest contentful paint element -->
+    <link rel="preload" as="image" href="/1767764040823.webp" fetchpriority="high" />
+
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Liam Goring",
+        "url": "https://liamgoring.com",
+        "image": "https://liamgoring.com/1767764040823.webp",
+        "jobTitle": "Full Stack Developer",
+        "description": "Full Stack Developer and Philosopher building modern web applications with a focus on AI-assisted workflows and engineering ethics.",
+        "sameAs": [
+          "https://github.com/lagliam",
+          "https://www.linkedin.com/in/liam-goring-833b8614a"
+        ],
+        "knowsAbout": ["Web Development", "Full Stack Development", "Artificial Intelligence", "Philosophy", "Ethics", "TypeScript", "Python", "Vue.js", "Astro"]
       }
+    </script>
+
+    <!-- Dark mode init — respects OS preference, localStorage overrides -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark-mode');
+        }
+      })();
     </script>
   </head>
   <body>
     <header>
-      <nav class="navbar">
+      <nav class="navbar" id="navbar" aria-label="Main navigation">
         <div class="nav-container">
-          <ul class="nav-menu">
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><button class="dark-mode-toggle" aria-label="Toggle dark mode" id="darkModeBtn">🌙</button></li>
+          <a href="#" class="nav-brand">Liam Goring</a>
+
+          <button
+            class="nav-hamburger"
+            id="navHamburger"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="navMenu"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+
+          <ul class="nav-menu" id="navMenu" role="list" aria-hidden="false">
+            <li><a href="#about" data-section="about">About</a></li>
+            <li><a href="#projects" data-section="projects">Projects</a></li>
+            <li><a href="#skills" data-section="skills">Skills</a></li>
+            <li><a href="#ai-adoption" data-section="ai-adoption">AI</a></li>
+            <li><a href="#contact" data-section="contact">Contact</a></li>
+            <li>
+              <button class="dark-mode-toggle" aria-label="Toggle dark mode" id="darkModeBtn">🌙</button>
+            </li>
           </ul>
         </div>
       </nav>
@@ -53,27 +137,120 @@ const currentYear = new Date().getFullYear();
       <div class="footer-container">
         <p>&copy; {currentYear} Liam Goring. All rights reserved.</p>
         <div class="footer-links">
-          <a href="https://github.com/lagliam" target="_blank">GitHub</a>
-          <a href="https://www.linkedin.com/in/liam-goring-833b8614a" target="_blank">LinkedIn</a>
+          <a href="https://github.com/lagliam" target="_blank" rel="noopener noreferrer">
+            GitHub
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+          <a href="https://www.linkedin.com/in/liam-goring-833b8614a" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
         </div>
       </div>
     </footer>
 
     <script>
+      // ── Dark mode toggle ──
       const darkModeToggle = document.getElementById('darkModeBtn');
-      const htmlElement = document.documentElement;
+      const htmlEl = document.documentElement;
+
+      const updateToggle = () => {
+        if (darkModeToggle) {
+          darkModeToggle.textContent = htmlEl.classList.contains('dark-mode') ? '☀️' : '🌙';
+          darkModeToggle.setAttribute(
+            'aria-label',
+            htmlEl.classList.contains('dark-mode') ? 'Switch to light mode' : 'Switch to dark mode'
+          );
+        }
+      };
 
       darkModeToggle?.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark-mode');
-        const isDark = htmlElement.classList.contains('dark-mode');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        darkModeToggle.textContent = isDark ? '☀️' : '🌙';
+        htmlEl.classList.toggle('dark-mode');
+        localStorage.setItem('theme', htmlEl.classList.contains('dark-mode') ? 'dark' : 'light');
+        updateToggle();
       });
 
-      // Set initial button text based on current dark mode state
-      if (darkModeToggle) {
-        darkModeToggle.textContent = htmlElement.classList.contains('dark-mode') ? '☀️' : '🌙';
-      }
+      updateToggle();
+
+      // ── Navbar scroll shadow ──
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        navbar?.classList.toggle('scrolled', window.scrollY > 8);
+      }, { passive: true });
+
+      // ── Mobile hamburger ──
+      const hamburger = document.getElementById('navHamburger') as HTMLButtonElement | null;
+      const navMenu = document.getElementById('navMenu');
+
+      const openMenu = () => {
+        navMenu?.classList.add('open');
+        hamburger?.classList.add('open');
+        hamburger?.setAttribute('aria-expanded', 'true');
+        navMenu?.setAttribute('aria-hidden', 'false');
+        // Move focus to first nav link
+        (navMenu?.querySelector('a') as HTMLElement | null)?.focus();
+      };
+
+      const closeMenu = () => {
+        navMenu?.classList.remove('open');
+        hamburger?.classList.remove('open');
+        hamburger?.setAttribute('aria-expanded', 'false');
+        navMenu?.setAttribute('aria-hidden', 'true');
+      };
+
+      hamburger?.addEventListener('click', () => {
+        const isOpen = navMenu?.classList.contains('open');
+        isOpen ? closeMenu() : openMenu();
+      });
+
+      // Close on any nav link click
+      navMenu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu?.classList.contains('open')) {
+          closeMenu();
+          hamburger?.focus();
+        }
+      });
+
+      // Close when clicking outside the nav
+      document.addEventListener('click', (e) => {
+        if (
+          navMenu?.classList.contains('open') &&
+          !navbar?.contains(e.target as Node)
+        ) {
+          closeMenu();
+        }
+      });
+
+      // ── Active section highlighting via IntersectionObserver ──
+      const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-menu a[data-section]');
+      const sectionIds = Array.from(navLinks).map(l => l.dataset.section!);
+
+      const setActive = (id: string) => {
+        navLinks.forEach(link => {
+          const isActive = link.dataset.section === id;
+          link.classList.toggle('active', isActive);
+          link.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+      };
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) setActive(entry.target.id);
+          });
+        },
+        { rootMargin: '-60px 0px -40% 0px', threshold: 0 }
+      );
+
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
     </script>
   </body>
 </html>

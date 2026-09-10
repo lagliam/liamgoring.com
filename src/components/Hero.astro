@@ -16,15 +16,17 @@ const {
 } = Astro.props;
 ---
 
-<section class="hero">
-  <div class="hero-content">
-    {photo && <img src={photo} alt={name} class="hero-photo" />}
-    <h1>{name}</h1>
-    <p class="hero-title">{title}</p>
-    <p class="hero-subtitle">{subtitle}</p>
-    <div class="hero-buttons">
-      <a href="#projects" class="btn btn-primary">View My Work</a>
-      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+<div class="hero-wrapper">
+  <section class="hero">
+    <div class="hero-content">
+      {photo && <img src={photo} alt={name} class="hero-photo" width="800" height="800" />}
+      <h1>{name}</h1>
+      <p class="hero-title">{title}</p>
+      <p class="hero-subtitle">{subtitle}</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

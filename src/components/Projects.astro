@@ -7,43 +7,47 @@ interface Project {
   tags?: string[];
   link?: string;
   image?: string;
+  /** 'cover' = photo-style fill (default), 'contain' = logo/SVG with padding */
+  imageStyle?: 'cover' | 'contain';
+  year?: string;
 }
 
 const projects: Project[] = [
   {
     title: "Personal Portfolio Website",
-    description: "Built with Astro and TypeScript, this portfolio website showcases my projects, skills, and experience.",
+    description: "Built with Astro and TypeScript, this site showcases my projects, skills, and thinking. Deployed via GitHub Actions to GitHub Pages.",
     tags: ["Astro", "TypeScript", "CSS"],
     link: "https://github.com/lagliam/liamgoring.com",
-    image: "/favicon.svg"
+    image: "/favicon.svg",
+    imageStyle: "contain",
+    year: "2024–present"
   },
   {
     title: "DIP-Bot",
-    description: "A Discord bot built with Python and MySQL that provides image posting utilities.",
+    description: "A Discord bot built with Python and MySQL that provides image posting utilities for servers.",
     tags: ["Python", "MySQL", "Discord API"],
     link: "https://github.com/lagliam/dip-bot",
-    image: "/Discord-Logo+Wordmark-Color.webp"
-  },
-  {
-    title: "Article: The Ethical Computer Professional",
-    description: "Covers the ethics of computer professionals such as programmers. Featured in the artificial intelligence magazine Becoming Human.",
-    tags: ["Writing", "Ethics", "AI"],
-    link: "https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b",
-    image: "/ethicalcomputerprofessional.webp"
+    image: "/Discord-Logo+Wordmark-Color.webp",
+    imageStyle: "contain",
+    year: "2023"
   },
   {
     title: "Jokebot",
-    description: "This bot will tell a knock knock joke or learn one from the user, saving to its database.",
-    tags: ["PHP", "Laravel", "Vue3", "TypeScript", "Sqlite"],
+    description: "A full-stack chatbot that tells knock-knock jokes and learns new ones from users, persisting them to a SQLite database.",
+    tags: ["PHP", "Laravel", "Vue3", "TypeScript", "SQLite"],
     link: "https://github.com/lagliam/jokebot",
-    image: "/jokebot.svg"
+    image: "/jokebot.svg",
+    imageStyle: "contain",
+    year: "2022"
   },
   {
     title: "PicBot Express",
-    description: "A Discord bot that posts images on an interval.",
-    tags: ["Discord", "Bot", "Automation", "Python", "MySQL"],
+    description: "A Discord bot that posts images from a configured library on a scheduled interval — set it and forget it.",
+    tags: ["Python", "MySQL", "Discord API", "Automation"],
     link: "https://picbotexpress.pages.dev/",
-    image: "/PicBot Express-logos.jpeg"
+    image: "/PicBot Express-logos.jpeg",
+    imageStyle: "contain",
+    year: "2022"
   }
 ];
 ---
@@ -51,23 +55,93 @@ const projects: Project[] = [
 <section id="projects" class="projects-section">
   <div class="container">
     <h2>Featured Projects</h2>
-    <p class="section-subtitle">Here are some of my recent projects that showcase my skills and experience.</p>
-    
+    <p class="section-subtitle">A selection of things I've built, written, and shipped.</p>
+
+    <!-- Featured writing callout -->
+    <div class="featured-article">
+      <div class="featured-article-label">Featured Writing</div>
+      <div class="featured-article-body">
+        <div class="featured-article-image">
+          <img
+            src="/ethicalcomputerprofessional.webp"
+            alt="The Ethical Computer Professional article cover"
+            width="400"
+            height="267"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <div class="featured-article-content">
+          <h3>The Ethical Computer Professional</h3>
+          <span class="featured-article-year">2021</span>
+          <p>
+            An exploration of the ethical responsibilities that come with writing software — covering professional
+            conduct, AI, privacy, and the societal impact of technical decisions. Published in
+            <em>Becoming Human</em>, an AI-focused publication on Medium.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Writing</span>
+            <span class="tag">Ethics</span>
+            <span class="tag">AI</span>
+            <span class="tag">Philosophy</span>
+          </div>
+          <a
+            href="https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b"
+            class="project-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read the Article
+            <svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            </svg>
+            <span class="sr-only">(opens in new tab)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project cards grid -->
     <div class="projects-grid">
       {projects.map((project) => (
         <div class="project-card">
           <div class="project-image">
-            <img src={project.image} alt={project.title} />
+            {project.image
+              ? <img
+                  src={project.image}
+                  alt={project.title}
+                  class={project.imageStyle === 'contain' ? 'img-contain' : ''}
+                  loading="lazy"
+                  decoding="async"
+                />
+              : <div class="project-image-placeholder" aria-hidden="true">
+                  {project.title.split(' ').slice(0, 2).map((w: string) => w[0]).join('')}
+                </div>
+            }
           </div>
           <div class="project-content">
-            <h3>{project.title}</h3>
+            <div class="project-header">
+              <h3>{project.title}</h3>
+              {project.year && <span class="project-year">{project.year}</span>}
+            </div>
             <p>{project.description}</p>
             <div class="project-tags">
               {project.tags?.map((tag) => (
                 <span class="tag">{tag}</span>
               ))}
             </div>
-            <a href={project.link} class="project-link">View Project →</a>
+            <a
+              href={project.link}
+              class="project-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Project
+              <svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              </svg>
+              <span class="sr-only">(opens in new tab)</span>
+            </a>
           </div>
         </div>
       ))}

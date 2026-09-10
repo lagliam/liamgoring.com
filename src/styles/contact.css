@@ -9,73 +9,101 @@
   text-align: center;
   margin-bottom: 1rem;
   color: var(--color-text);
+  transition: color 0.3s ease;
 }
 
-.section-subtitle {
+.contact-section .section-subtitle {
   text-align: center;
   color: var(--color-text-light);
   font-size: 1.1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  transition: color 0.3s ease;
 }
 
-.contact-grid {
-  max-width: 800px;
-  margin: 0 auto;
-  display: grid;
-  gap: 1rem;
-}
-
-.contact-actions {
+.contact-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.linkedin-badge {
+.contact-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.625rem 1rem;
-  background-color: #0A66C2;
-  border: 2px solid #0A66C2;
+  padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
-  color: white;
   font-weight: 600;
+  font-size: 0.95rem;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.2);
+  border: 2px solid transparent;
+}
+
+/* focus-visible ring for keyboard navigation */
+.contact-badge:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+/* ── Email ── */
+.email-badge {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+}
+
+.email-badge:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ── LinkedIn ── */
+.linkedin-badge {
+  background-color: #0A66C2;
+  color: white;
+  border-color: #0A66C2;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.25);
 }
 
 .linkedin-badge:hover {
-  background-color: #084a8f;
-  border-color: #084a8f;
-  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.4);
+  background-color: transparent;
+  color: #0A66C2;
+  box-shadow: 0 6px 16px rgba(10, 102, 194, 0.3);
   transform: translateY(-2px);
 }
 
-.linkedin-badge svg {
+/* ── GitHub ── */
+.github-badge {
+  background-color: var(--color-text);
+  color: var(--bg-primary);
+  border-color: var(--color-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.github-badge:hover {
+  background-color: transparent;
+  color: var(--color-text);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* main icon */
+.contact-badge svg:first-of-type {
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
-.form-group textarea {
-  resize: vertical;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 0.875rem;
-  background-color: var(--color-primary);
-  color: white;
-  border: none;
-  border-radius: 0.375rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+/* external link indicator icon */
+.ext-icon {
+  width: 13px !important;
+  height: 13px !important;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
@@ -83,12 +111,14 @@
     padding: 2rem 1rem;
   }
 
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .contact-links {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .contact-actions {
-    flex-direction: column;
+  .contact-badge {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
   }
 }

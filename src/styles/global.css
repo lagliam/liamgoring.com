@@ -4,6 +4,13 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px; /* offset for sticky navbar height */
+}
+
+
+
 :root {
   --color-primary: #3b82f6;
   --color-secondary: #1f2937;
@@ -93,4 +100,29 @@ button:hover {
   h3 {
     font-size: 1.25rem;
   }
+}
+
+/* ── Accessibility utilities ── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Global keyboard focus ring — only shown on keyboard nav, not mouse clicks */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Remove default outline when not needed (mouse users) */
+:focus:not(:focus-visible) {
+  outline: none;
 }

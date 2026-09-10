@@ -1,0 +1,90 @@
+---
+import '../styles/ai-adoption.css';
+
+interface AITool {
+  icon: string;
+  name: string;
+  description: string;
+  tags: string[];
+}
+
+const tools: AITool[] = [
+  {
+    icon: "🤖",
+    name: "AI-Assisted Development",
+    description: "I use tools like Kiro, GitHub Copilot, and Claude to accelerate development — from generating boilerplate to debugging tricky edge cases. AI handles the repetitive scaffolding so I can focus on architecture and logic.",
+    tags: ["Kiro", "Copilot", "Claude"]
+  },
+  {
+    icon: "🔍",
+    name: "Research & Documentation",
+    description: "LLMs have transformed how I research unfamiliar APIs, digest long docs, and explore new domains. What used to take hours of reading can now be understood in minutes through targeted conversation.",
+    tags: ["ChatGPT", "Perplexity", "Claude"]
+  },
+  {
+    icon: "📝",
+    name: "Writing & Communication",
+    description: "Technical writing — blog posts, READMEs, spec documents — benefits enormously from AI drafting and editing. I keep the ideas, domain knowledge, and final judgement; AI helps me express them clearly.",
+    tags: ["Writing", "Docs", "READMEs"]
+  },
+  {
+    icon: "🧪",
+    name: "Testing & Code Review",
+    description: "AI tools help me think through edge cases, generate test scenarios, and review my own code for issues I might have missed. It's like having a tireless second pair of eyes on every PR.",
+    tags: ["Testing", "Code Review", "QA"]
+  },
+  {
+    icon: "⚙️",
+    name: "Automation & Scripting",
+    description: "From CI/CD pipeline configuration to one-off data transformation scripts, AI dramatically reduces the time spent on automation tasks. I describe the problem; it proposes a working starting point.",
+    tags: ["CI/CD", "Scripting", "DevOps"]
+  },
+  {
+    icon: "🧠",
+    name: "Learning & Skill Growth",
+    description: "AI has become my on-demand tutor — explaining new concepts, walking through algorithms, and challenging my understanding through Socratic dialogue. It complements traditional learning with instant feedback.",
+    tags: ["Learning", "Problem Solving"]
+  }
+];
+---
+
+<section id="ai-adoption" class="ai-section">
+  <div class="container">
+    <h2>AI in My Workflow</h2>
+    <p class="section-subtitle">How I integrate artificial intelligence tools to build smarter and faster.</p>
+
+    <p class="ai-intro">
+      AI tools have become a core part of how I work — not as a replacement for thinking, but as a force multiplier.
+      Across the full software development lifecycle I lean on AI to reduce friction, catch blind spots, and move faster
+      without sacrificing quality.
+    </p>
+
+    <div class="ai-tools-grid">
+      {tools.map((tool) => (
+        <div class="ai-tool-card">
+          <div class="ai-tool-icon">{tool.icon}</div>
+          <h3>{tool.name}</h3>
+          <p>{tool.description}</p>
+          <div class="ai-tool-tags">
+            {tool.tags.map((tag) => (
+              <span class="ai-tool-tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="ai-philosophy">
+      <h3>My Philosophy on AI Adoption</h3>
+      <p>
+        I've published writing on the ethics of technology and AI — including an article in <em>Becoming Human</em> magazine —
+        so I'm thoughtful about how and why these tools are adopted. AI is most valuable when the developer
+        retains ownership of the problem, the architecture, and the outcome.
+      </p>
+      <p>
+        The goal is always to build better software, not to outsource critical thinking. AI accelerates
+        execution; engineering judgement still drives every meaningful decision.
+      </p>
+    </div>
+  </div>
+</section>
