@@ -1,108 +1,255 @@
-* {
+/* ─────────────────────────────────────────────────────────────
+   "Working notes" design system
+   Light = paper notebook · Dark = seminar chalkboard
+   ───────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  /* core palette — light / paper */
+  --ground: #edf0f2;        /* page background, cool paper */
+  --ground-raised: #f6f7f8; /* rare: a sheet laid on the page */
+  --ink: #1b2a4a;           /* blue-black pen: primary text */
+  --ink-muted: #5b6678;     /* secondary text */
+  --rule: #b5362f;          /* notebook margin red: annotations, the ∴ rule, focus */
+  --hairline: #c9d3dd;      /* quiet dividers */
+  --highlight: rgba(181, 54, 47, 0.08);
+
+  /* type */
+  --font-serif: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* modular scale, ratio 1.25, base 1.125rem (18px) */
+  --step--1: 0.9rem;
+  --step-0: 1.125rem;
+  --step-1: 1.406rem;
+  --step-2: 1.758rem;
+  --step-3: 2.197rem;
+  --step-4: 2.747rem;
+  --step-5: 3.433rem;
+
+  /* layout */
+  --measure: 68ch;          /* max line length for prose */
+  --page-max: 1100px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --margin-col: 14rem;      /* width of the annotation column left of the rule */
+  --section-space: clamp(3.5rem, 8vw, 5.5rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* legacy aliases — kept so un-migrated stylesheets keep working */
+  --color-primary: var(--ink);
+  --color-accent: var(--rule);
+  --color-text: var(--ink);
+  --color-text-light: var(--ink-muted);
+  --color-border: var(--hairline);
+  --color-secondary: var(--ink);
+  --bg-primary: var(--ground);
+  --bg-secondary: var(--ground);
+  --bg-tertiary: var(--ground-raised);
+  --bg-accent: var(--highlight);
+  --bg-hover: var(--highlight);
+}
+
+/* dark / chalkboard */
+html.dark-mode {
+  --ground: #1e2b28;
+  --ground-raised: #243430;
+  --ink: #e6e8e1;
+  --ink-muted: #a9b3ac;
+  --rule: #e9d77a;          /* chalk yellow */
+  --hairline: #3a4a45;
+  --highlight: rgba(233, 215, 122, 0.1);
+  color-scheme: dark;
+}
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 70px; /* offset for sticky navbar height */
-}
-
-
-
-:root {
-  --color-primary: #3b82f6;
-  --color-secondary: #1f2937;
-  --color-accent: #f59e0b;
-  --color-light: #f3f4f6;
-  --color-border: #d9dce2;
-  --color-text: #111827;
-  --color-text-light: #6b7280;
-  --bg-primary: #eff3f8;
-  --bg-secondary: #e9eef5;
-  --bg-tertiary: #dce3f0;
-  --bg-accent: #e8f0ff;
-  --bg-hover: #e8ecf3;
-}
-
-html.dark-mode {
-  --color-secondary: #e5e7eb;
-  --color-text: #f3f4f6;
-  --color-text-light: #d1d5db;
-  --color-light: #1f2937;
-  --color-border: #374151;
-  --bg-primary: #0f172a;
-  --bg-secondary: #1e293b;
-  --bg-tertiary: #334155;
-  --bg-accent: #1e3a8a;
-  --bg-hover: #1e293b;
+  scroll-padding-top: 72px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--color-text);
-  line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: var(--font-serif);
+  font-size: var(--step-0);
+  font-optical-sizing: auto;
+  line-height: 1.65;
+  background-color: var(--ground);
+  color: var(--ink);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
-h1 {
-  font-size: 3rem;
-}
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); }
 
-h2 {
-  font-size: 2rem;
-}
+p { text-wrap: pretty; }
 
-h3 {
-  font-size: 1.5rem;
-}
+em { font-style: italic; }
 
 a {
-  color: var(--color-primary);
-  text-decoration: none;
-  transition: color 0.3s ease;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-thickness 0.15s ease, color 0.15s ease;
 }
 
 a:hover {
-  color: var(--color-accent);
+  text-decoration-thickness: 3px;
 }
+
+img { max-width: 100%; display: block; }
 
 button {
-  padding: 0.75rem 1.5rem;
-  background-color: var(--color-primary);
-  color: white;
+  font: inherit;
+  color: inherit;
+  background: none;
   border: none;
-  border-radius: 0.5rem;
   cursor: pointer;
+}
+
+/* ── shared primitives ───────────────────────────────────────── */
+
+.container {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section {
+  padding: var(--section-space) 0;
+}
+
+/* section heading: serif, left aligned, no eyebrow */
+.section-heading {
+  font-size: var(--step-3);
+  margin-bottom: 0.5em;
+}
+
+.section-lede {
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-muted);
+  max-width: 40ch;
+  margin-bottom: 2.5rem;
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose p + p { margin-top: 1em; }
+
+/* the "margin" layout: annotation column | red rule | main column.
+   Use: <div class="margin-layout"><aside class="margin-note">…</aside><div class="margin-main">…</div></div> */
+.margin-layout {
+  display: grid;
+  grid-template-columns: var(--margin-col) 1fr;
+  column-gap: 2.5rem;
+  position: relative;
+}
+
+.margin-layout::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--margin-col) + 1.25rem);
+  width: 1.5px;
+  background: var(--rule);
+  opacity: 0.55;
+}
+
+.margin-note {
+  grid-column: 1;
+  font-size: var(--step--1);
+  line-height: 1.5;
+  color: var(--ink-muted);
+  font-style: italic;
+  text-align: right;
+}
+
+.margin-main {
+  grid-column: 2;
+  min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .margin-layout {
+    grid-template-columns: 1fr;
+    padding-left: 1.25rem;
+  }
+  .margin-layout::before {
+    left: 0;
+  }
+  .margin-note,
+  .margin-main {
+    grid-column: 1;
+    text-align: left;
+  }
+}
+
+/* text-style action: the site's one button style */
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-sans);
   font-size: 1rem;
-  transition: background-color 0.3s ease;
+  font-weight: 600;
+  padding: 0.7em 1.25em;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-button:hover {
-  background-color: #2563eb;
+.action:hover {
+  background-color: var(--ink);
+  color: var(--ground);
 }
 
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1.25rem;
-  }
+.action--primary {
+  background-color: var(--ink);
+  color: var(--ground);
 }
 
-/* ── Accessibility utilities ── */
+.action--primary:hover {
+  background-color: transparent;
+  color: var(--ink);
+}
+
+.ext-icon {
+  width: 0.8em;
+  height: 0.8em;
+  display: inline-block;
+  vertical-align: baseline;
+  margin-left: 0.2em;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* ── accessibility ───────────────────────────────────────────── */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -115,14 +262,39 @@ button:hover {
   border: 0;
 }
 
-/* Global keyboard focus ring — only shown on keyboard nav, not mouse clicks */
-:focus-visible {
-  outline: 3px solid var(--color-primary);
-  outline-offset: 3px;
-  border-radius: 3px;
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--ground);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-sans);
 }
 
-/* Remove default outline when not needed (mouse users) */
-:focus:not(:focus-visible) {
-  outline: none;
+.skip-link:focus { top: 1rem; }
+
+:focus-visible {
+  outline: 2px solid var(--rule);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) { outline: none; }
+
+::selection {
+  background: var(--rule);
+  color: var(--ground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

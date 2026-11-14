@@ -1,49 +1,103 @@
 ---
 import '../styles/skills.css';
 
-interface Skill {
-  category: string;
-  technologies: string[];
+type Category = 'frontend' | 'backend' | 'tools' | 'AI' | 'practice';
+
+/** A cross-reference: either another index entry (by name) or a project. */
+type SeeAlso = { entry: string } | { project: string };
+
+interface Entry {
+  name: string;
+  category: Category;
+  seeAlso?: SeeAlso[];
 }
 
-const skills: Skill[] = [
-  {
-    category: "Frontend",
-    technologies: ["Vue.js", "AngularJS", "Astro", "TypeScript"]
-  },
-  {
-    category: "Backend",
-    technologies: ["Node.js", "Python", "MySQL", "Laravel", "PHP"]
-  },
-  {
-    category: "Tools & Platforms",
-    technologies: ["Git", "Docker", "AWS", "GitHub Actions", "VS Code"]
-  },
-  {
-    category: "AI & Automation",
-    technologies: ["Kiro", "GitHub Copilot", "Claude", "ChatGPT", "Prompt Engineering"]
-  },
-  {
-    category: "Other",
-    technologies: ["REST APIs", "Web Performance", "SEO", "Testing", "DevOps", "Agile"]
-  }
+const entries: Entry[] = [
+  { name: 'Vue.js', category: 'frontend', seeAlso: [{ project: 'Jokebot' }] },
+  { name: 'AngularJS', category: 'frontend' },
+  { name: 'Astro', category: 'frontend', seeAlso: [{ entry: 'TypeScript' }] },
+  { name: 'TypeScript', category: 'frontend', seeAlso: [{ entry: 'Astro' }, { entry: 'Vue.js' }] },
+
+  { name: 'Node.js', category: 'backend' },
+  { name: 'Python', category: 'backend', seeAlso: [{ project: 'DIP-Bot' }, { project: 'PicBot Express' }] },
+  { name: 'MySQL', category: 'backend', seeAlso: [{ entry: 'Python' }] },
+  { name: 'Laravel', category: 'backend', seeAlso: [{ entry: 'PHP' }, { project: 'Jokebot' }] },
+  { name: 'PHP', category: 'backend', seeAlso: [{ entry: 'Laravel' }] },
+
+  { name: 'Git', category: 'tools' },
+  { name: 'Docker', category: 'tools', seeAlso: [{ entry: 'DevOps' }] },
+  { name: 'AWS', category: 'tools' },
+  { name: 'GitHub Actions', category: 'tools', seeAlso: [{ entry: 'DevOps' }] },
+  { name: 'VS Code', category: 'tools' },
+
+  { name: 'Kiro', category: 'AI' },
+  { name: 'GitHub Copilot', category: 'AI' },
+  { name: 'Claude', category: 'AI', seeAlso: [{ entry: 'Prompt engineering' }] },
+  { name: 'ChatGPT', category: 'AI', seeAlso: [{ entry: 'Prompt engineering' }] },
+  { name: 'Prompt engineering', category: 'AI' },
+
+  { name: 'REST APIs', category: 'practice' },
+  { name: 'Web performance', category: 'practice', seeAlso: [{ entry: 'SEO' }] },
+  { name: 'SEO', category: 'practice' },
+  { name: 'Testing', category: 'practice' },
+  { name: 'DevOps', category: 'practice', seeAlso: [{ entry: 'Docker' }, { entry: 'GitHub Actions' }] },
+  { name: 'Agile', category: 'practice' },
 ];
+
+const slug = (name: string) =>
+  'idx-' + name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+const names = new Set(entries.map((e) => e.name));
+for (const e of entries) {
+  for (const ref of e.seeAlso ?? []) {
+    if ('entry' in ref && !names.has(ref.entry)) {
+      throw new Error(`Skills index: "${e.name}" cross-references missing entry "${ref.entry}"`);
+    }
+  }
+}
+
+const collator = new Intl.Collator('en', { sensitivity: 'base' });
+const sorted = [...entries].sort((a, b) => collator.compare(a.name, b.name));
+
+const groups = new Map<string, Entry[]>();
+for (const e of sorted) {
+  const letter = e.name[0].toUpperCase();
+  if (!groups.has(letter)) groups.set(letter, []);
+  groups.get(letter)!.push(e);
+}
+
+const refLabel = (ref: SeeAlso) => ('entry' in ref ? ref.entry : ref.project);
+const refHref = (ref: SeeAlso) => ('entry' in ref ? `#${slug(ref.entry)}` : '#projects');
 ---
 
-<section id="skills" class="skills-section">
+<section id="skills" class="section skills">
   <div class="container">
-    <h2>Skills & Technologies</h2>
-    <p class="section-subtitle">A summary of the technologies and tools I work with.</p>
-    
-    <div class="skills-grid">
-      {skills.map((skillGroup) => (
-        <div class="skill-category">
-          <h3>{skillGroup.category}</h3>
-          <div class="skills-list">
-            {skillGroup.technologies.map((tech) => (
-              <span class="skill-badge">{tech}</span>
+    <h2 class="section-heading">Skills, indexed</h2>
+    <p class="section-lede">The tools I reach for, alphabetically.</p>
+
+    <div class="skills-index">
+      {[...groups].map(([letter, items]) => (
+        <div class="index-group">
+          <h3 class="index-letter" id={`idx-letter-${letter.toLowerCase()}`}>{letter}</h3>
+          <ul class="index-entries" aria-labelledby={`idx-letter-${letter.toLowerCase()}`}>
+            {items.map((e) => (
+              <li class="index-entry" id={slug(e.name)}>
+                <span class="index-term">{e.name}</span>,{' '}
+                <em class="index-cat">{e.category}</em>
+                {e.seeAlso && (
+                  <>
+                    ; <em class="index-see">see also</em>{' '}
+                    {e.seeAlso.map((ref, i) => (
+                      <>
+                        {i > 0 && ', '}
+                        <a class="index-ref" href={refHref(ref)}>{refLabel(ref)}{'project' in ref && <span class="sr-only"> (project)</span>}</a>
+                      </>
+                    ))}
+                  </>
+                )}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       ))}
     </div>

@@ -1,116 +1,236 @@
-.hero-wrapper {
-  background: linear-gradient(135deg, var(--bg-accent) 0%, var(--bg-secondary) 60%, var(--bg-tertiary) 100%);
-  border-bottom: 1px solid var(--color-border);
-}
+/* ─────────────────────────────────────────────────────────────
+   Hero: the page opens with a short formal argument.
+   P1, P2, a drawn rule, then the conclusion (∴), then the byline.
+   ───────────────────────────────────────────────────────────── */
 
 .hero {
+  --label-col: clamp(2rem, 5vw, 4.25rem);
+  --label-gap: clamp(0.75rem, 2vw, 1.5rem);
+
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  padding: 5rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: calc(100svh - 64px);
+  padding: clamp(3rem, 9vh, 6rem) 0;
+  background-color: var(--ground);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.hero-inner {
   width: 100%;
 }
 
-.hero-photo {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--color-primary);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+/* ── the argument ────────────────────────────────────────────── */
+
+.argument {
+  list-style: none;
+  width: fit-content;
+  max-width: 100%;
+  font-size: clamp(1.75rem, 1.05rem + 3.4vw, var(--step-5));
+  line-height: 1.15;
+  letter-spacing: -0.015em;
 }
 
-.hero-content {
-  max-width: 720px;
-  text-align: center;
+.argument-line {
+  display: grid;
+  grid-template-columns: var(--label-col) minmax(0, 1fr);
+  column-gap: var(--label-gap);
+  align-items: baseline;
 }
 
-.hero h1 {
-  margin-bottom: 0.5rem;
+.argument-line + .argument-line {
+  margin-top: 0.2em;
 }
 
-.hero-title {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero-subtitle {
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.btn {
-  padding: 0.875rem 2rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+.argument-label {
+  font-size: max(0.42em, 0.8rem);
   font-weight: 600;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--rule);
+  text-align: right;
+  line-height: 1;
 }
 
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-  border: 2px solid var(--color-primary);
+.argument-text {
+  font-weight: 400;
+  text-wrap: balance;
+  max-width: 9.5em; /* keeps the drawn rule close to the longest line */
 }
 
-.btn-primary:hover {
-  background-color: transparent;
-  color: var(--color-primary);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+/* premise links: quiet at rest, marked in the margin colour on hover/focus */
+.argument-text a {
+  text-decoration-color: var(--hairline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  transition: text-decoration-color 0.2s ease, text-decoration-thickness 0.2s ease;
 }
 
-.btn-secondary {
-  background-color: transparent;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
+.argument-text a:hover,
+.argument-text a:focus-visible {
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 2px;
 }
 
-.btn-secondary:hover {
-  background-color: var(--color-primary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
+/* the conclusion, set under a rule that spans the whole argument */
+.argument-line--conclusion {
+  position: relative;
+  padding-top: 0.45em;
 }
 
-@media (max-width: 768px) {
+.argument-line + .argument-line--conclusion {
+  margin-top: 0.45em;
+}
+
+.argument-line--conclusion::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--rule);
+  transform-origin: left center;
+}
+
+.argument-line--conclusion .argument-label {
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.argument-line--conclusion .argument-text {
+  font-weight: 600;
+}
+
+/* ── byline: name, role, actions, photo ─────────────────────── */
+
+.hero-signature {
+  display: grid;
+  grid-template-columns: minmax(0, 34rem) auto;
+  grid-template-areas:
+    "name    photo"
+    "role    photo"
+    "summary photo"
+    "actions photo";
+  column-gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  margin-top: clamp(2.5rem, 7vh, 4.5rem);
+  margin-left: calc(var(--label-col) + var(--label-gap));
+}
+
+/* let the name, role, summary and actions sit directly in the grid */
+.hero-id {
+  display: contents;
+}
+
+.hero-name {
+  grid-area: name;
+  font-size: var(--step-2);
+  line-height: 1.2;
+}
+
+.hero-role {
+  grid-area: role;
+  margin-top: 0.15rem;
+  font-size: var(--step-0);
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.hero-summary {
+  grid-area: summary;
+  margin-top: 0.75rem;
+  max-width: 44ch;
+  font-size: var(--step-0);
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.hero-actions {
+  grid-area: actions;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.hero-photo {
+  grid-area: photo;
+  width: 144px;
+  height: 144px;
+  object-fit: cover;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+}
+
+@media (max-width: 640px) {
   .hero {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-    min-height: 70vh;
+    min-height: 0;
   }
 
-  .hero h1 {
-    font-size: 2.5rem;
+  .hero-signature {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name    photo"
+      "role    photo"
+      "summary summary"
+      "actions actions";
+    column-gap: 1rem;
   }
 
-  .hero-title {
-    font-size: 1.25rem;
+  .hero-photo {
+    width: 72px;
+    height: 72px;
   }
+}
 
-  .hero-subtitle {
-    font-size: 1rem;
+/* ── one load sequence: P1, P2, the rule, ∴, then the byline ── */
+
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.2em);
   }
-
-  .hero-buttons {
-    flex-direction: column;
-    gap: 1rem;
+  to {
+    opacity: 1;
+    transform: none;
   }
+}
 
-  .btn {
-    width: 100%;
+@keyframes hero-rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.argument-line--1 {
+  animation: hero-line-in 0.45s var(--ease-out) 0.05s both;
+}
+
+.argument-line--2 {
+  animation: hero-line-in 0.45s var(--ease-out) 0.35s both;
+}
+
+.argument-line--conclusion::before {
+  animation: hero-rule-draw 0.4s var(--ease-out) 0.75s both;
+}
+
+.argument-line--conclusion > * {
+  animation: hero-line-in 0.45s var(--ease-out) 1.05s both;
+}
+
+.hero-signature {
+  animation: hero-fade-in 0.45s ease-out 1.3s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .argument-line--1,
+  .argument-line--2,
+  .argument-line--conclusion::before,
+  .argument-line--conclusion > *,
+  .hero-signature {
+    animation: none;
   }
 }

@@ -2,43 +2,85 @@
 import '../styles/about.css';
 ---
 
-<section id="about" class="about-section">
+<section id="about" class="section about" aria-labelledby="about-heading">
   <div class="container">
-    <div class="about-content">
-      <div class="about-text">
-        <h2>About Me</h2>
-        <p>
+    <div class="margin-layout about-layout">
+      <h2 id="about-heading" class="section-heading margin-main">About</h2>
+
+      <div class="about-row">
+        <p class="margin-main about-para">
           I'm a full stack developer who thinks carefully about what software is actually <em>for</em>.
-          My background spans frontend and backend engineering — Vue, Astro, Node, Python, AWS — but the
-          thread running through all of it is a genuine interest in how technology shapes the people who
-          use it.
+          I work across the frontend and the backend<sup class="note-mark" aria-hidden="true">1</sup><button
+            type="button"
+            class="note-toggle"
+            aria-expanded="false"
+            aria-controls="sidenote-1"
+          ><span class="sr-only">Note </span>1</button>, but the thread running through all of it is how
+          technology shapes the people who use it.
         </p>
-        <p>
-          That interest led me to publish writing on AI ethics in <em>Becoming Human</em> magazine and to
-          pursue philosophy alongside my engineering work. I believe the best developers aren't just
-          technically sharp — they ask harder questions about systems, incentives, and consequences.
-        </p>
-        <p>
-          Day to day I integrate AI tools deeply into my workflow — from code generation to research to
-          documentation — while keeping a critical eye on where automation helps and where human judgement
-          is irreplaceable. That balance is what I bring to every project I work on.
-        </p>
+        <aside id="sidenote-1" class="margin-note sidenote">
+          <span class="sidenote-num" aria-hidden="true">1</span>
+          Mostly Vue and Astro up front, Node and Python behind them, running on AWS.
+        </aside>
       </div>
 
-      <div class="about-stats">
-        <div class="stat">
-          <div class="stat-number">5+</div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">10+</div>
-          <div class="stat-label">Projects Shipped</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Published Articles</div>
-        </div>
+      <div class="about-row">
+        <p class="margin-main about-para">
+          That interest led me to publish writing on AI ethics in <em>Becoming Human</em><sup
+            class="note-mark"
+            aria-hidden="true">2</sup><button
+            type="button"
+            class="note-toggle"
+            aria-expanded="false"
+            aria-controls="sidenote-2"
+          ><span class="sr-only">Note </span>2</button> and to pursue philosophy alongside my engineering
+          work. I think the best developers aren't only technically sharp. They ask harder questions about
+          systems, incentives, and consequences.
+        </p>
+        <aside id="sidenote-2" class="margin-note sidenote">
+          <span class="sidenote-num" aria-hidden="true">2</span>
+          <a
+            href="https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b"
+            target="_blank"
+            rel="noopener noreferrer"
+          >“The Ethical Computer Professional”<span class="sr-only"> (opens in new tab)</span></a>, <cite>Becoming Human</cite>, 2021.
+        </aside>
+      </div>
+
+      <div class="about-row">
+        <p class="margin-main about-para">
+          Day to day I use AI tools throughout my workflow, from code generation to research to
+          documentation. I keep a critical eye on where automation helps and where human judgement is
+          irreplaceable<sup class="note-mark" aria-hidden="true">3</sup><button
+            type="button"
+            class="note-toggle"
+            aria-expanded="false"
+            aria-controls="sidenote-3"
+          ><span class="sr-only">Note </span>3</button>. That balance is what I bring to every project.
+        </p>
+        <aside id="sidenote-3" class="margin-note sidenote">
+          <span class="sidenote-num" aria-hidden="true">3</span>
+          Where I draw that line: see <a href="#ai-adoption">AI in my workflow</a>.
+        </aside>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  // Mobile sidenotes: the superscript marker becomes a toggle that opens its note
+  // inline below the paragraph. On wide screens CSS hides the toggles and the notes
+  // sit in the margin. Without scripting, CSS leaves every note visible inline.
+  const about = document.getElementById('about');
+  if (about) {
+    about.querySelectorAll<HTMLButtonElement>('.note-toggle').forEach((button) => {
+      const note = document.getElementById(button.getAttribute('aria-controls') ?? '');
+      if (!note) return;
+      button.addEventListener('click', () => {
+        const open = button.getAttribute('aria-expanded') !== 'true';
+        button.setAttribute('aria-expanded', String(open));
+        note.classList.toggle('is-open', open);
+      });
+    });
+  }
+</script>

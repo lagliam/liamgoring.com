@@ -1,85 +1,129 @@
-.about-section {
-  padding: 5rem 2rem;
-  background-color: var(--bg-secondary);
-  transition: background-color 0.3s ease;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+/* About: prose in the main column, Tufte-style sidenotes in the margin.
+   Each paragraph and its note share one row so the note sits beside it. */
+
+.about {
+  /* --rule alone is ~4.4:1 on paper; nudge it toward ink for small marker text */
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.about-layout {
+  row-gap: 1.1rem;
 }
 
-.about-content {
+.about-layout .section-heading {
+  margin-bottom: 0.4rem;
+}
+
+.about-row {
+  grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
+  grid-template-columns: var(--margin-col) 1fr; /* fallback without subgrid */
+  grid-template-columns: subgrid;
+  column-gap: 2.5rem;
 }
 
-.about-text h2 {
-  margin-bottom: 1.5rem;
-  color: var(--color-text);
-  transition: color 0.3s ease;
+.about-para {
+  grid-row: 1;
+  max-width: var(--measure);
 }
 
-.about-text p {
-  color: var(--color-text-light);
-  margin-bottom: 1rem;
-  line-height: 1.8;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+.sidenote {
+  grid-row: 1;
+  /* nudge the smaller note text onto the paragraph's first line */
+  padding-top: 0.3em;
 }
 
-.about-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+.sidenote cite {
+  font-style: normal;
 }
 
-.stat {
-  text-align: center;
-  padding: 1.5rem;
-  background-color: var(--bg-tertiary);
-  border-radius: 0.75rem;
-  border-left: 4px solid var(--color-primary);
-  transition: background-color 0.3s ease, transform 0.3s ease;
+.sidenote a {
+  overflow-wrap: anywhere;
 }
 
-.stat:hover {
-  transform: translateY(-3px);
-}
-
-.stat-number {
-  font-size: 2.5rem;
+/* reference markers: a true sequence, so numbered */
+.note-mark,
+.note-toggle,
+.sidenote-num {
+  font-family: var(--font-sans);
+  font-style: normal;
   font-weight: 700;
-  color: var(--color-primary);
-  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--rule);
 }
 
-.stat-label {
-  color: var(--color-text-light);
-  font-weight: 500;
-  transition: color 0.3s ease;
+.note-mark,
+.note-toggle {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
 }
 
-@media (max-width: 768px) {
-  .about-section {
-    padding: 2rem 1rem;
-  }
+.note-mark {
+  padding-left: 0.1em;
+}
 
-  .about-content {
+.sidenote-num {
+  font-size: 0.85em;
+  margin-right: 0.3em;
+}
+
+/* the toggle only exists on narrow screens with scripting */
+.note-toggle {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .about-row {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: subgrid;
   }
 
-  .about-stats {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .about-para {
+    grid-column: 1;
   }
 
-  .stat-number {
-    font-size: 2rem;
+  .sidenote {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0.75rem 0 0.25rem 1rem;
+    padding: 0.1em 0 0.1em 0.9rem;
+    border-left: 2px solid var(--rule);
+    max-width: 52ch;
+  }
+}
+
+@media (max-width: 860px) and (scripting: enabled) {
+  .note-mark {
+    display: none;
+  }
+
+  .note-toggle {
+    display: inline;
+    /* padding widens the tap target without changing line height */
+    padding: 0.55em 0.2em;
+    margin: 0 -0.2em 0 -0.05em;
+    border-radius: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  .note-toggle[aria-expanded='true'] {
+    background-color: var(--highlight);
+    text-decoration: none;
+  }
+
+  .sidenote:not(.is-open) {
+    display: none;
+  }
+
+  .sidenote.is-open {
+    animation: sidenote-in 0.2s var(--ease-out);
+  }
+}
+
+@keyframes sidenote-in {
+  from {
+    opacity: 0;
   }
 }

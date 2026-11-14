@@ -1,90 +1,196 @@
 ---
 import '../styles/ai-adoption.css';
 
-interface AITool {
-  icon: string;
-  name: string;
-  description: string;
-  tags: string[];
+interface LedgerRow {
+  id: string;
+  area: string;
+  handOff: string;
+  tools?: string;
+  keep: string;
+  detail: string;
+  /** Rough share handed off, 0–100. Illustrative, not measured. */
+  split: number;
 }
 
-const tools: AITool[] = [
+const rows: LedgerRow[] = [
   {
-    icon: "🤖",
-    name: "AI-Assisted Development",
-    description: "I use tools like Kiro, GitHub Copilot, and Claude to accelerate development — from generating boilerplate to debugging tricky edge cases. AI handles the repetitive scaffolding so I can focus on architecture and logic.",
-    tags: ["Kiro", "Copilot", "Claude"]
+    id: 'scaffolding',
+    area: 'Scaffolding and boilerplate',
+    handOff: 'Boilerplate, scaffolding and first-pass debugging',
+    tools: 'Kiro, GitHub Copilot, Claude',
+    keep: 'Architecture and the logic that matters',
+    detail:
+      'I use Kiro, GitHub Copilot and Claude to speed up development, from generating boilerplate to chasing tricky edge cases. AI handles the repetitive scaffolding so I can focus on architecture and logic.',
+    split: 70,
   },
   {
-    icon: "🔍",
-    name: "Research & Documentation",
-    description: "LLMs have transformed how I research unfamiliar APIs, digest long docs, and explore new domains. What used to take hours of reading can now be understood in minutes through targeted conversation.",
-    tags: ["ChatGPT", "Perplexity", "Claude"]
+    id: 'research',
+    area: 'Research and documentation',
+    handOff: 'Digesting long docs and unfamiliar APIs',
+    tools: 'ChatGPT, Perplexity, Claude',
+    keep: 'Deciding what is true and what matters',
+    detail:
+      'LLMs changed how I research unfamiliar APIs, digest long docs and explore new domains. What used to take hours of reading now takes minutes of targeted conversation.',
+    split: 50,
   },
   {
-    icon: "📝",
-    name: "Writing & Communication",
-    description: "Technical writing — blog posts, READMEs, spec documents — benefits enormously from AI drafting and editing. I keep the ideas, domain knowledge, and final judgement; AI helps me express them clearly.",
-    tags: ["Writing", "Docs", "READMEs"]
+    id: 'testing',
+    area: 'Testing and code review',
+    handOff: 'Brainstorming edge cases and test scenarios',
+    keep: 'Judging which issues are real and what ships',
+    detail:
+      'AI helps me think through edge cases, generate test scenarios and review my own code for issues I might have missed. It is a tireless second pair of eyes on every pull request.',
+    split: 45,
   },
   {
-    icon: "🧪",
-    name: "Testing & Code Review",
-    description: "AI tools help me think through edge cases, generate test scenarios, and review my own code for issues I might have missed. It's like having a tireless second pair of eyes on every PR.",
-    tags: ["Testing", "Code Review", "QA"]
+    id: 'automation',
+    area: 'Automation and scripting',
+    handOff: 'A working first draft of pipelines and scripts',
+    keep: 'Defining the problem and reviewing the result',
+    detail:
+      'From CI/CD pipeline configuration to one-off data transformation scripts, AI cuts the time I spend on automation. I describe the problem; it proposes a working starting point.',
+    split: 65,
   },
   {
-    icon: "⚙️",
-    name: "Automation & Scripting",
-    description: "From CI/CD pipeline configuration to one-off data transformation scripts, AI dramatically reduces the time spent on automation tasks. I describe the problem; it proposes a working starting point.",
-    tags: ["CI/CD", "Scripting", "DevOps"]
+    id: 'writing',
+    area: 'Writing and communication',
+    handOff: 'Drafting and line edits',
+    keep: 'The ideas, domain knowledge and final call',
+    detail:
+      'Blog posts, READMEs and spec documents all benefit from AI drafting and editing. I keep the ideas, the domain knowledge and the final judgement; AI helps me say them clearly.',
+    split: 35,
   },
   {
-    icon: "🧠",
-    name: "Learning & Skill Growth",
-    description: "AI has become my on-demand tutor — explaining new concepts, walking through algorithms, and challenging my understanding through Socratic dialogue. It complements traditional learning with instant feedback.",
-    tags: ["Learning", "Problem Solving"]
-  }
+    id: 'learning',
+    area: 'Learning',
+    handOff: 'Explanations on demand and Socratic questioning',
+    keep: 'The understanding itself',
+    detail:
+      'AI has become an on-demand tutor. It explains new concepts, walks through algorithms and challenges my understanding through Socratic dialogue, with instant feedback alongside traditional learning.',
+    split: 40,
+  },
 ];
+
+const describeSplit = (split: number) =>
+  split >= 60
+    ? 'I hand off most of this'
+    : split <= 40
+      ? 'I keep most of this'
+      : 'Roughly an even split';
 ---
 
-<section id="ai-adoption" class="ai-section">
+<section id="ai-adoption" class="section ai-section">
   <div class="container">
-    <h2>AI in My Workflow</h2>
-    <p class="section-subtitle">How I integrate artificial intelligence tools to build smarter and faster.</p>
+    <h2 class="section-heading">AI in my workflow</h2>
+    <p class="section-lede">Not a replacement for thinking, a force multiplier.</p>
 
-    <p class="ai-intro">
-      AI tools have become a core part of how I work — not as a replacement for thinking, but as a force multiplier.
-      Across the full software development lifecycle I lean on AI to reduce friction, catch blind spots, and move faster
-      without sacrificing quality.
+    <p class="ledger-caption">
+      Where I draw the line in each area of work. The splits are a rough sketch, not a measurement.
     </p>
 
-    <div class="ai-tools-grid">
-      {tools.map((tool) => (
-        <div class="ai-tool-card">
-          <div class="ai-tool-icon">{tool.icon}</div>
-          <h3>{tool.name}</h3>
-          <p>{tool.description}</p>
-          <div class="ai-tool-tags">
-            {tool.tags.map((tag) => (
-              <span class="ai-tool-tag">{tag}</span>
-            ))}
-          </div>
-        </div>
-      ))}
+    <div class="ledger" data-ledger>
+      <div class="ledger-head" aria-hidden="true">
+        <span class="ledger-head-off">What I hand off</span>
+        <span class="ledger-head-keep">What I keep</span>
+      </div>
+
+      <ul class="ledger-rows" role="list">
+        {rows.map((row) => (
+          <li class="ledger-row is-open" data-ledger-row style={`--off: ${row.split}%;`}>
+            <h3 class="ledger-area">
+              <button
+                type="button"
+                class="ledger-toggle"
+                id={`ledger-btn-${row.id}`}
+                aria-controls={`ledger-detail-${row.id}`}
+              >
+                {row.area}
+              </button>
+            </h3>
+
+            <p class="ledger-cell ledger-cell--off">
+              <span class="ledger-label">What I hand off</span>
+              <span class="ledger-text">{row.handOff}</span>
+              {row.tools && <span class="ledger-tools">{row.tools}</span>}
+            </p>
+
+            <p class="ledger-cell ledger-cell--keep">
+              <span class="ledger-label">What I keep</span>
+              <span class="ledger-text">{row.keep}</span>
+            </p>
+
+            <div
+              class="ledger-detail"
+              id={`ledger-detail-${row.id}`}
+              role="region"
+              aria-labelledby={`ledger-btn-${row.id}`}
+            >
+              <p>{row.detail}</p>
+              <p class="ledger-verdict">{describeSplit(row.split)}.</p>
+            </div>
+
+            <div class="ledger-split" aria-hidden="true">
+              <span class="ledger-split-off"></span>
+              <span class="ledger-split-keep"></span>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
 
-    <div class="ai-philosophy">
-      <h3>My Philosophy on AI Adoption</h3>
+    <div class="prose ai-philosophy">
       <p>
-        I've published writing on the ethics of technology and AI — including an article in <em>Becoming Human</em> magazine —
-        so I'm thoughtful about how and why these tools are adopted. AI is most valuable when the developer
-        retains ownership of the problem, the architecture, and the outcome.
-      </p>
-      <p>
-        The goal is always to build better software, not to outsource critical thinking. AI accelerates
-        execution; engineering judgement still drives every meaningful decision.
+        I have written about the ethics of technology and AI, including{" "}
+        <a
+          href="https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b"
+          target="_blank"
+          rel="noopener noreferrer"
+        >an article in <em>Becoming Human</em><svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span class="sr-only">(opens in new tab)</span></a>,
+        so I care about how and why these tools get adopted. AI is most useful when the developer keeps ownership of
+        the problem, the architecture and the outcome. It accelerates execution; engineering judgement still drives
+        every meaningful decision.
       </p>
     </div>
   </div>
 </section>
+
+<script>
+  const ledger = document.querySelector<HTMLElement>('[data-ledger]');
+
+  if (ledger) {
+    const rows = Array.from(ledger.querySelectorAll<HTMLElement>('[data-ledger-row]'));
+
+    const setOpen = (target: HTMLElement | null) => {
+      rows.forEach((row) => {
+        const open = row === target;
+        const button = row.querySelector<HTMLButtonElement>('.ledger-toggle');
+        const detail = row.querySelector<HTMLElement>('.ledger-detail');
+        row.classList.toggle('is-open', open);
+        button?.setAttribute('aria-expanded', String(open));
+        if (detail) detail.hidden = !open;
+      });
+    };
+
+    // Collapse to the first row before transitions are switched on, so nothing animates on load.
+    ledger.classList.add('is-enhanced');
+    setOpen(rows[0] ?? null);
+    requestAnimationFrame(() => requestAnimationFrame(() => ledger.classList.add('is-ready')));
+
+    rows.forEach((row) => {
+      const button = row.querySelector<HTMLButtonElement>('.ledger-toggle');
+      const toggle = () => setOpen(row.classList.contains('is-open') ? null : row);
+
+      button?.addEventListener('click', (event) => {
+        event.stopPropagation();
+        toggle();
+      });
+
+      // Pointer convenience: the whole row is a click target. Keyboard users use the button.
+      row.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).closest('a')) return;
+        if (window.getSelection()?.toString()) return;
+        toggle();
+      });
+    });
+  }
+</script>
