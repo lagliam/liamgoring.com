@@ -15,10 +15,10 @@ const {
   photo = ""
 } = Astro.props;
 
-// The argument the page opens with. Each line can point to the section that backs it up.
+// The argument the page opens with.
 const premises = [
-  { label: "P1", spoken: "Premise one:", text: "Software shapes the people who use it.", href: "#about" },
-  { label: "P2", spoken: "Premise two:", text: "I write software.", href: "#projects" },
+  { label: "P1", spoken: "Premise one:", text: "Software shapes the people who use it." },
+  { label: "P2", spoken: "Premise two:", text: "I write software." },
 ];
 const conclusion = { label: "∴", spoken: "Therefore:", text: "I think hard about what I build." };
 ---
@@ -31,7 +31,7 @@ const conclusion = { label: "∴", spoken: "Therefore:", text: "I think hard abo
           <span class="argument-label" aria-hidden="true">{p.label}</span>
           <p class="argument-text">
             <span class="sr-only">{p.spoken} </span>
-            <a href={p.href}>{p.text}</a>
+            {p.text}
           </p>
         </li>
       ))}

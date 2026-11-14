@@ -57,18 +57,6 @@
 }
 
 /* premise links: quiet at rest, marked in the margin colour on hover/focus */
-.argument-text a {
-  text-decoration-color: var(--hairline);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.16em;
-  transition: text-decoration-color 0.2s ease, text-decoration-thickness 0.2s ease;
-}
-
-.argument-text a:hover,
-.argument-text a:focus-visible {
-  text-decoration-color: var(--rule);
-  text-decoration-thickness: 2px;
-}
 
 /* the conclusion, set under a rule that spans the whole argument */
 .argument-line--conclusion {

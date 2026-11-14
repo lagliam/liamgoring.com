@@ -16,7 +16,7 @@
   --ground: #edf0f2;        /* page background, cool paper */
   --ground-raised: #f6f7f8; /* rare: a sheet laid on the page */
   --ink: #1b2a4a;           /* blue-black pen: primary text */
-  --ink-muted: #5b6678;     /* secondary text */
+  --ink-muted: #434e63;     /* secondary text, 7.3:1 on paper */
   --rule: #b5362f;          /* notebook margin red: annotations, the ∴ rule, focus */
   --hairline: #c9d3dd;      /* quiet dividers */
   --highlight: rgba(181, 54, 47, 0.08);
@@ -26,7 +26,7 @@
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
   /* modular scale, ratio 1.25, base 1.125rem (18px) */
-  --step--1: 0.9rem;
+  --step--1: 0.95rem;
   --step-0: 1.125rem;
   --step-1: 1.406rem;
   --step-2: 1.758rem;
@@ -35,7 +35,7 @@
   --step-5: 3.433rem;
 
   /* layout */
-  --measure: 68ch;          /* max line length for prose */
+  --measure: 62ch;          /* max line length for prose */
   --page-max: 1100px;
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --margin-col: 14rem;      /* width of the annotation column left of the rule */
@@ -61,8 +61,8 @@
 html.dark-mode {
   --ground: #1e2b28;
   --ground-raised: #243430;
-  --ink: #e6e8e1;
-  --ink-muted: #a9b3ac;
+  --ink: #eef0ea;
+  --ink-muted: #c2cac4;     /* 8.8:1 on chalkboard */
   --rule: #e9d77a;          /* chalk yellow */
   --hairline: #3a4a45;
   --highlight: rgba(233, 215, 122, 0.1);
@@ -79,7 +79,7 @@ body {
   font-family: var(--font-serif);
   font-size: var(--step-0);
   font-optical-sizing: auto;
-  line-height: 1.65;
+  line-height: 1.7;
   background-color: var(--ground);
   color: var(--ink);
   text-rendering: optimizeLegibility;
@@ -183,7 +183,6 @@ button {
   font-size: var(--step--1);
   line-height: 1.5;
   color: var(--ink-muted);
-  font-style: italic;
   text-align: right;
 }
 
