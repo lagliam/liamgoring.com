@@ -1,150 +1,144 @@
 ---
 import '../styles/projects.css';
 
-interface Project {
+interface Entry {
   title: string;
+  /** Display label for the margin, e.g. "2022" or "2024–present" */
+  year: string;
+  /** Machine-readable start year for <time> */
+  datetime: string;
+  ongoing?: boolean;
+  why: string;
   description: string;
-  tags?: string[];
-  link?: string;
-  image?: string;
-  /** 'cover' = photo-style fill (default), 'contain' = logo/SVG with padding */
-  imageStyle?: 'cover' | 'contain';
-  year?: string;
+  tags: string[];
+  link: string;
+  linkLabel: string;
+  /** The one large entry: the published article */
+  feature?: boolean;
 }
 
-const projects: Project[] = [
+// Oldest first: the timeline reads as a line of reasoning, starting from
+// the question of what we owe the people our code affects.
+const entries: Entry[] = [
   {
-    title: "Personal Portfolio Website",
-    description: "Built with Astro and TypeScript, this site showcases my projects, skills, and thinking. Deployed via GitHub Actions to GitHub Pages.",
-    tags: ["Astro", "TypeScript", "CSS"],
-    link: "https://github.com/lagliam/liamgoring.com",
-    image: "/favicon.svg",
-    imageStyle: "contain",
-    year: "2024–present"
+    title: 'The Ethical Computer Professional',
+    year: '2021',
+    datetime: '2021',
+    why: 'What do we owe the people our code affects?',
+    description:
+      'An essay on the ethical responsibilities that come with writing software: professional conduct, AI, privacy, and the social impact of technical decisions.',
+    tags: ['Ethics', 'AI', 'Philosophy'],
+    link: 'https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b',
+    linkLabel: 'Read the article',
+    feature: true,
   },
   {
-    title: "DIP-Bot",
-    description: "A Discord bot built with Python and MySQL that provides image posting utilities for servers.",
-    tags: ["Python", "MySQL", "Discord API"],
-    link: "https://github.com/lagliam/dip-bot",
-    image: "/Discord-Logo+Wordmark-Color.webp",
-    imageStyle: "contain",
-    year: "2023"
+    title: 'Jokebot',
+    year: '2022',
+    datetime: '2022',
+    why: 'Could a bot learn humour from the people it talks to?',
+    description:
+      'A full-stack chatbot that tells knock-knock jokes and learns new ones from users, saving them to a SQLite database.',
+    tags: ['PHP', 'Laravel', 'Vue 3', 'TypeScript', 'SQLite'],
+    link: 'https://github.com/lagliam/jokebot',
+    linkLabel: 'View project',
   },
   {
-    title: "Jokebot",
-    description: "A full-stack chatbot that tells knock-knock jokes and learns new ones from users, persisting them to a SQLite database.",
-    tags: ["PHP", "Laravel", "Vue3", "TypeScript", "SQLite"],
-    link: "https://github.com/lagliam/jokebot",
-    image: "/jokebot.svg",
-    imageStyle: "contain",
-    year: "2022"
+    title: 'PicBot Express',
+    year: '2022',
+    datetime: '2022',
+    why: 'Set it and forget it, for servers that want a steady stream of images.',
+    description: 'A Discord bot that posts images from a configured library on a schedule.',
+    tags: ['Python', 'MySQL', 'Discord API'],
+    link: 'https://picbotexpress.pages.dev/',
+    linkLabel: 'View project',
   },
   {
-    title: "PicBot Express",
-    description: "A Discord bot that posts images from a configured library on a scheduled interval — set it and forget it.",
-    tags: ["Python", "MySQL", "Discord API", "Automation"],
-    link: "https://picbotexpress.pages.dev/",
-    image: "/PicBot Express-logos.jpeg",
-    imageStyle: "contain",
-    year: "2022"
-  }
+    title: 'DIP-Bot',
+    year: '2023',
+    datetime: '2023',
+    why: 'A toolkit for servers that post a lot of images.',
+    description: 'A Discord bot built with Python and MySQL that provides image posting utilities for servers.',
+    tags: ['Python', 'MySQL', 'Discord API'],
+    link: 'https://github.com/lagliam/dip-bot',
+    linkLabel: 'View project',
+  },
+  {
+    title: 'This portfolio',
+    year: '2024–present',
+    datetime: '2024',
+    ongoing: true,
+    why: 'A place to show the work and the thinking behind it.',
+    description: 'Built with Astro and TypeScript, and deployed to GitHub Pages with GitHub Actions.',
+    tags: ['Astro', 'TypeScript', 'CSS'],
+    link: 'https://github.com/lagliam/liamgoring.com',
+    linkLabel: 'View project',
+  },
 ];
 ---
 
-<section id="projects" class="projects-section">
+<section id="projects" class="section projects" aria-labelledby="projects-heading">
   <div class="container">
-    <h2>Featured Projects</h2>
-    <p class="section-subtitle">A selection of things I've built, written, and shipped.</p>
+    <h2 id="projects-heading" class="section-heading">Work and writing</h2>
+    <p class="section-lede">Things I've built and written, in order.</p>
 
-    <!-- Featured writing callout -->
-    <div class="featured-article">
-      <div class="featured-article-label">Featured Writing</div>
-      <div class="featured-article-body">
-        <div class="featured-article-image">
-          <img
-            src="/ethicalcomputerprofessional.webp"
-            alt="The Ethical Computer Professional article cover"
-            width="400"
-            height="267"
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-        <div class="featured-article-content">
-          <h3>The Ethical Computer Professional</h3>
-          <span class="featured-article-year">2021</span>
-          <p>
-            An exploration of the ethical responsibilities that come with writing software — covering professional
-            conduct, AI, privacy, and the societal impact of technical decisions. Published in
-            <em>Becoming Human</em>, an AI-focused publication on Medium.
-          </p>
-          <div class="project-tags">
-            <span class="tag">Writing</span>
-            <span class="tag">Ethics</span>
-            <span class="tag">AI</span>
-            <span class="tag">Philosophy</span>
-          </div>
-          <a
-            href="https://becominghuman.ai/the-ethical-computer-professional-625e6c65923b"
-            class="project-link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read the Article
-            <svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-            </svg>
-            <span class="sr-only">(opens in new tab)</span>
-          </a>
-        </div>
-      </div>
-    </div>
+    <ol class="timeline margin-layout" role="list">
+      {entries.map((entry, i) => {
+        const repeatYear = i > 0 && entries[i - 1].year === entry.year;
+        const yearClass = [
+          'timeline-year',
+          repeatYear && 'timeline-year--repeat',
+          entry.ongoing && 'timeline-year--ongoing',
+        ].filter(Boolean).join(' ');
 
-    <!-- Project cards grid -->
-    <div class="projects-grid">
-      {projects.map((project) => (
-        <div class="project-card">
-          <div class="project-image">
-            {project.image
-              ? <img
-                  src={project.image}
-                  alt={project.title}
-                  class={project.imageStyle === 'contain' ? 'img-contain' : ''}
+        return (
+          <li class:list={['timeline-entry', entry.feature && 'timeline-entry--feature']}>
+            <p class={yearClass}>
+              <span class={repeatYear ? 'sr-only' : undefined}>
+                <time datetime={entry.datetime}>{entry.ongoing ? entry.year.split('–')[0] : entry.year}</time>{entry.ongoing && '–present'}
+              </span>
+            </p>
+
+            <div class="timeline-body margin-main">
+              <div class="timeline-text">
+                <h3 class="timeline-title">{entry.title}</h3>
+                <p class="timeline-why">{entry.why}</p>
+                <p class="timeline-desc">
+                  {entry.description}
+                  {entry.feature && <> Published in <em>Becoming Human</em>, an AI-focused publication on Medium.</>}
+                </p>
+                <div class="timeline-meta">
+                  <p class="timeline-tags">{entry.tags.join(', ')}</p>
+                  <a
+                    href={entry.link}
+                    class="timeline-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {entry.linkLabel}<span class="sr-only">: {entry.title}</span>
+                    <svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    </svg>
+                    <span class="sr-only"> (opens in new tab)</span>
+                  </a>
+                </div>
+              </div>
+
+              {entry.feature && (
+                <img
+                  class="timeline-cover"
+                  src="/ethicalcomputerprofessional.webp"
+                  alt=""
+                  width="400"
+                  height="267"
                   loading="lazy"
                   decoding="async"
                 />
-              : <div class="project-image-placeholder" aria-hidden="true">
-                  {project.title.split(' ').slice(0, 2).map((w: string) => w[0]).join('')}
-                </div>
-            }
-          </div>
-          <div class="project-content">
-            <div class="project-header">
-              <h3>{project.title}</h3>
-              {project.year && <span class="project-year">{project.year}</span>}
+              )}
             </div>
-            <p>{project.description}</p>
-            <div class="project-tags">
-              {project.tags?.map((tag) => (
-                <span class="tag">{tag}</span>
-              ))}
-            </div>
-            <a
-              href={project.link}
-              class="project-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Project
-              <svg class="ext-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-              </svg>
-              <span class="sr-only">(opens in new tab)</span>
-            </a>
-          </div>
-        </div>
-      ))}
-    </div>
+          </li>
+        );
+      })}
+    </ol>
   </div>
 </section>

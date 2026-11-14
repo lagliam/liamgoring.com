@@ -14,19 +14,57 @@ const {
   subtitle = "",
   photo = ""
 } = Astro.props;
+
+// The argument the page opens with. Each line can point to the section that backs it up.
+const premises = [
+  { label: "P1", spoken: "Premise one:", text: "Software shapes the people who use it.", href: "#about" },
+  { label: "P2", spoken: "Premise two:", text: "I write software.", href: "#projects" },
+];
+const conclusion = { label: "∴", spoken: "Therefore:", text: "I think hard about what I build." };
 ---
 
-<div class="hero-wrapper">
-  <section class="hero">
-    <div class="hero-content">
-      {photo && <img src={photo} alt={name} class="hero-photo" width="800" height="800" />}
-      <h1>{name}</h1>
-      <p class="hero-title">{title}</p>
-      <p class="hero-subtitle">{subtitle}</p>
-      <div class="hero-buttons">
-        <a href="#projects" class="btn btn-primary">View My Work</a>
-        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+<section class="hero" aria-labelledby="hero-name">
+  <div class="container hero-inner">
+    <ol class="argument" aria-label="An argument in three lines">
+      {premises.map((p, i) => (
+        <li class={`argument-line argument-line--${i + 1}`}>
+          <span class="argument-label" aria-hidden="true">{p.label}</span>
+          <p class="argument-text">
+            <span class="sr-only">{p.spoken} </span>
+            <a href={p.href}>{p.text}</a>
+          </p>
+        </li>
+      ))}
+      <li class="argument-line argument-line--conclusion">
+        <span class="argument-label" aria-hidden="true">{conclusion.label}</span>
+        <p class="argument-text">
+          <span class="sr-only">{conclusion.spoken} </span>
+          {conclusion.text}
+        </p>
+      </li>
+    </ol>
+
+    <div class="hero-signature">
+      <div class="hero-id">
+        <h1 id="hero-name" class="hero-name">{name}</h1>
+        {title && <p class="hero-role">{title}</p>}
+        {subtitle && <p class="hero-summary">{subtitle}</p>}
+        <div class="hero-actions">
+          <a href="#projects" class="action action--primary">See the work</a>
+          <a href="#contact" class="action">Get in touch</a>
+        </div>
       </div>
+      {photo && (
+        <img
+          src={photo}
+          alt={`Portrait of ${name}`}
+          class="hero-photo"
+          width="800"
+          height="800"
+          fetchpriority="high"
+          decoding="async"
+        />
+      )}
     </div>
-  </section>
-</div>
+  </div>
+</section>
